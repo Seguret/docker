@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  drawio:
+    image: fjudith/draw.io:latest
+    container_name: drawio
+    ports:
+      - "8080:8080"
+    volumes:
+      - drawio-data:/data
+    restart: always
+
+volumes:
+  drawio-data:
