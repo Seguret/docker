@@ -1,37 +1,19 @@
-version: '3.8'
+ersion: '3.8'
 
 services:
   vault:
     image: vault:1.13.3
     container_name: vault
-    environment:
-      VAULT_LOCAL_CONFIG: |
-        {
-          "storage": {
-            "file": {
-              "path": "/vault/file"
-            }
-          },
-          "listener": {
-            "tcp": {
-              "address": "0.0.0.0:8200",
-              "tls_disable": 1
-            }
-          },
-          "default_lease_ttl": "168h",
-          "max_lease_ttl": "720h",
-          "ui": true,
-          "disable_mlock": true
-        }
     ports:
       - "8200:8200"
     volumes:
       - ./data:/vault/file
+      - ./config/vault-config.json:/vault/config/vault-config.json
     networks:
       - vault-net
     command: ["vault", "server", "-config=/vault/config/vault-config.json"]
-    entrypoint: /bin/sh -c 'mkdir -p /vault/config && echo "$$VAULT_LOCAL_CONFIG" > /vault/config/vault-config.json && vault server -config=/vault/config/vault-config.json'
-
+    restart: always
+ 
 networks:
   vault-net:
     driver: bridge
