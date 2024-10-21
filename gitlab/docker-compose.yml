@@ -1,0 +1,30 @@
+version: '3'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    hostname: '<YOUR_URL>'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://<YOUR_URL>'
+        nginx['redirect_http_to_https'] = true
+        nginx['ssl_certificate'] = "/etc/gitlab/ssl/gitlab.crt"
+        nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/gitlab.key"
+        nginx['listen_port'] = 443      
+        gitlab_rails['gitlab_shell_ssh_port'] = 22
+        nginx['listen_https'] = true
+    ports:
+      - '80:80'
+      - '443:443'
+      - '2224:22'
+    volumes:
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
+      - '/etc/ssl/certs/gitlab:/etc/gitlab/ssl'
+    networks:
+      - gitlab-network
+
+networks:
+  gitlab-network:
+    driver: bridge
