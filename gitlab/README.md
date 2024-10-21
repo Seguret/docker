@@ -1,5 +1,3 @@
-Ecco la documentazione completa in formato **Markdown** di tutti i passaggi che hai seguito per installare e configurare GitLab con Docker, SSL tramite OpenSSL, e con volumi persistenti.
-
 ```markdown
 # Installazione e Configurazione di GitLab con Docker, SSL e Volumi Persistenti
 
@@ -152,4 +150,3 @@ tail -f /var/log/gitlab/nginx/gitlab_error.log
 
 - [Documentazione ufficiale di GitLab](https://docs.gitlab.com/omnibus/docker/)
 - [Documentazione ufficiale di Docker](https://docs.docker.com/)
-```
